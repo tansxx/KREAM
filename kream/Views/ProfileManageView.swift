@@ -182,17 +182,21 @@ class ProfileManageView: UIView {
         }
         
         emailChangeButton.snp.makeConstraints {
+            $0.centerY.equalTo(emailField)
             $0.top.equalTo(emailLabel.snp.bottom).offset(4)
             $0.left.equalTo(emailField.snp.right).offset(9)
             $0.right.equalToSuperview().offset(-17)
             $0.height.equalTo(32)
+            $0.width.equalTo(58)
         }
         
         pwdChangeButton.snp.makeConstraints {
+            $0.centerY.equalTo(pwdField)
             $0.top.equalTo(pwdLabel.snp.bottom).offset(4)
             $0.left.equalTo(pwdField.snp.right).offset(9)
             $0.right.equalToSuperview().offset(-17)
             $0.height.equalTo(32)
+            $0.width.equalTo(58)
         }
         
     }

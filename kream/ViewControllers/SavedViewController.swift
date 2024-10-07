@@ -6,24 +6,37 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class SavedViewController: UIViewController {
+    
+    let data = dummySavedModel.savedDatas
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.view = savedView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private lazy var savedView = SavedView().then {
+        $0.tableView.dataSource = self
+        $0.tableView.delegate = self
     }
-    */
+    
+}
 
+extension SavedViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        data.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SavedCell", for: indexPath) as? SavedCell else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(model: data[indexPath.row])
+        
+        return cell
+    }
 }

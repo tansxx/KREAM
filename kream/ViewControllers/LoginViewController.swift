@@ -24,11 +24,20 @@ class LoginViewController: UIViewController {
     
     @objc
     private func loginbtnTap() {
+        guard let email = loginView.idTextField.text, !email.isEmpty,
+              let pwd = loginView.pwdTextField.text, !pwd.isEmpty else {
+            return
+        }
+        
+        // 이메일과 비밀번호를 UserDefaults에 저장
+        UserDefaults.standard.set(email, forKey: "userEmail")
+        UserDefaults.standard.set(pwd, forKey: "userPwd")
+        
         let viewController = BaseViewController()
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
-
+    
 
 }
 
