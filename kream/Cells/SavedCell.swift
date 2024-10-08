@@ -53,6 +53,7 @@ class SavedCell: UITableViewCell {
         $0.textAlignment = .left
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
+
     
     private lazy var savedInfo = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 9, weight: .regular)

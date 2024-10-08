@@ -16,13 +16,12 @@ class MypageViewController: UIViewController {
         setupView()
     }
     
-    
     private lazy var myPageView: MypageView = {
         let view = MypageView()
-        view.profileManageButton.addTarget(self, action: #selector(profilemanagebtnTap), for:.touchUpInside)
+        view.profileManageButton.addTarget(self, action: #selector(profilemanagebtnTap), for: .touchUpInside)
         return view
     }()
-    
+
     private func setupView() {
         view.addSubview(myPageView)
         
@@ -32,8 +31,13 @@ class MypageViewController: UIViewController {
             $0.height.equalToSuperview().offset(297)
         }
         
+        // 프로필 사진을 UserDefaults에 저장
+        if let profileImage = myPageView.profileImage.image {
+            let imageData = profileImage.pngData()
+            UserDefaults.standard.set(imageData, forKey: "profileImage")
+        }
     }
-    
+
     @objc
     private func profilemanagebtnTap() {
         let profileManageVC = ProfileManageViewController()

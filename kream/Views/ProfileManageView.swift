@@ -30,14 +30,11 @@ class ProfileManageView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    public lazy var profileImage: UIImageView = {
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(named: "profile_image")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
-    }()
+    public lazy var profileImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.image = UIImage(named: "profile_image")
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
     
     public lazy var infoLabel = UILabel().then {
         $0.text = "프로필 정보"
@@ -66,8 +63,8 @@ class ProfileManageView: UIView {
     public lazy var emailField = UITextField().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textAlignment = .left
-        $0.placeholder = "새로운 이메일을 입력해주세요!"
-        $0.attributedPlaceholder = NSAttributedString(string: "새로운 이메일을 입력해주세요!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        /*** $0.placeholder = "새로운 이메일을 입력해주세요!"
+        $0.attributedPlaceholder = NSAttributedString(string: "새로운 이메일을 입력해주세요!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]) ***/
         
         $0.frame.size.height = 32
         $0.borderStyle = .roundedRect
@@ -80,8 +77,8 @@ class ProfileManageView: UIView {
     public lazy var pwdField = UITextField().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textAlignment = .left
-        $0.placeholder = "새로운 비밀번호를 입력해주세요!"
-        $0.attributedPlaceholder = NSAttributedString(string: "새로운 비밀번호를 입력해주세요!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        /*** $0.placeholder = "새로운 비밀번호를 입력해주세요!"
+        $0.attributedPlaceholder = NSAttributedString(string: "새로운 비밀번호를 입력해주세요!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]) ***/
         
         $0.frame.size.height = 32
         $0.borderStyle = .roundedRect
@@ -134,7 +131,7 @@ class ProfileManageView: UIView {
     
     private func addComponents() {
         self.addSubview(manageLabel)
-        self.addSubview(profileImage)
+        self.addSubview(profileImageView)
         self.addSubview(infoLabel)
         self.addSubview(emailLabel)
         self.addSubview(pwdLabel)
@@ -148,14 +145,14 @@ class ProfileManageView: UIView {
             $0.centerX.equalToSuperview()
         }
         
-        profileImage.snp.makeConstraints {
+        profileImageView.snp.makeConstraints {
             $0.top.equalTo(manageLabel.snp.bottom).offset(52)
             $0.centerX.equalToSuperview()
             $0.height.width.equalTo(90)
         }
         
         infoLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImage.snp.bottom).offset(20)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(27)
         }
         

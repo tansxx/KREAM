@@ -11,6 +11,7 @@ class ProfileManageViewController: UIViewController {
     
     var userEmail: String = ""
     var userPwd: String = ""
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +42,15 @@ class ProfileManageViewController: UIViewController {
         
         navigationController?.popViewController(animated: true)
     }
+    
     private func loadProfileData() {
+        // 이메일과 비밀번호
         let savedEmail = UserDefaults.standard.string(forKey: "userEmail") ?? ""
         let savedPwd = UserDefaults.standard.string(forKey: "userPwd") ?? ""
         
         profileManageView.emailField.text = savedEmail.isEmpty ? nil : savedEmail
         profileManageView.pwdField.text = savedPwd.isEmpty ? nil : savedPwd
+        
     }
     
     // 이메일 변경 버튼 액션

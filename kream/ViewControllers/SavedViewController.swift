@@ -11,16 +11,31 @@ import Then
 
 class SavedViewController: UIViewController {
     
-    let data = dummySavedModel.savedDatas
+    private let data = dummySavedModel.savedDatas
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = savedView
+        configureHeaderView()
     }
     
     private lazy var savedView = SavedView().then {
         $0.tableView.dataSource = self
         $0.tableView.delegate = self
+        $0.smallLabel.text = "전체 \(data.count)개"
+    }
+    
+    private func configureHeaderView() {
+        let headerView = UIView(frame:CGRect(x: 0, y : 0, width: view.frame.width, height: 50))
+        let headerLabel = UILabel(frame: headerView.bounds)
+        
+        headerLabel.textAlignment = .left
+        headerLabel.numberOfLines = 0
+        headerLabel.text = "전체 \(data.count)개"
+        
+        headerView.addSubview(headerLabel)
+        savedView.tableView.tableHeaderView = headerView
+    
     }
     
 }
