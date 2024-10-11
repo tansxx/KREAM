@@ -63,8 +63,6 @@ class ProfileManageView: UIView {
     public lazy var emailField = UITextField().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textAlignment = .left
-        /*** $0.placeholder = "새로운 이메일을 입력해주세요!"
-        $0.attributedPlaceholder = NSAttributedString(string: "새로운 이메일을 입력해주세요!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]) ***/
         
         $0.frame.size.height = 32
         $0.borderStyle = .roundedRect
@@ -77,8 +75,6 @@ class ProfileManageView: UIView {
     public lazy var pwdField = UITextField().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textAlignment = .left
-        /*** $0.placeholder = "새로운 비밀번호를 입력해주세요!"
-        $0.attributedPlaceholder = NSAttributedString(string: "새로운 비밀번호를 입력해주세요!", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]) ***/
         
         $0.frame.size.height = 32
         $0.borderStyle = .roundedRect

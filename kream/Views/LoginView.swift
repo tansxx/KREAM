@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class LoginView: UIView {
 
@@ -61,9 +62,11 @@ class LoginView: UIView {
         textField.font = UIFont.systemFont(ofSize: 12)
         textField.textAlignment = .left
         textField.attributedPlaceholder = NSAttributedString(string: "예) kream@kream.co.kr", attributes: [.foregroundColor: UIColor.lightGray])
+        textField.leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 16.0, height: 0.0))
+        textField.leftViewMode = .always
         
         textField.frame.size.height = 34
-        textField.borderStyle = .roundedRect
+        textField.borderStyle = .none
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.cornerRadius = 15
@@ -80,9 +83,11 @@ class LoginView: UIView {
         textField.font = UIFont.systemFont(ofSize: 12)
         textField.textAlignment = .left
         textField.attributedPlaceholder = NSAttributedString(string: "비밀번호를 입력해주세요", attributes: [.foregroundColor: UIColor.lightGray])
+        textField.leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 16.0, height: 0.0))
+        textField.leftViewMode = .always
         
         textField.frame.size.height = 34
-        textField.borderStyle = .roundedRect
+        textField.borderStyle = .none
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.cornerRadius = 15
@@ -99,34 +104,36 @@ class LoginView: UIView {
         return container
     }()
     
-    public lazy var loginButton: UIButton = {
-        let btn = UIButton()
+    public lazy var loginButton = UIButton().then {
         
         var configuration = UIButton.Configuration.filled()
         
-        configuration.baseBackgroundColor = UIColor.lightGray
+        configuration.baseBackgroundColor = UIColor.systemGray5
         configuration.baseForegroundColor = UIColor.white
         configuration.title = "로그인"
         configuration.titleAlignment = .center
         
-        btn.configuration = configuration
-        btn.layer.cornerRadius = 8
-        btn.translatesAutoresizingMaskIntoConstraints = false
+        var titleAttribute = AttributedString("로그인")
+        titleAttribute.font = UIFont.systemFont(ofSize: 14)
+        configuration.attributedTitle = titleAttribute
         
-        return btn
-    }()
+        $0.configuration = configuration
+        $0.layer.cornerRadius = 8
+        $0.translatesAutoresizingMaskIntoConstraints = false
+
+    }
     
-    public lazy var kakaoButton: UIButton = {
-        let btn = UIButton()
+    public lazy var kakaoButton = UIButton().then {
         let icon = UIImageView()
         
         var configuration = UIButton.Configuration.plain()
         
         configuration.title = "카카오로 로그인"
         configuration.baseForegroundColor = UIColor.black
+        configuration.titleAlignment = .center
         icon.image = UIImage(named: "kakao-icon")
         
-        btn.addSubview(icon)
+        $0.addSubview(icon)
         
         icon.snp.makeConstraints {
             $0.leading.equalTo(17)
@@ -134,29 +141,31 @@ class LoginView: UIView {
             $0.height.equalTo(14)
             $0.width.equalTo(15)
         }
+        var titleAttribute = AttributedString("카카오로 로그인")
+        titleAttribute.font = UIFont.boldSystemFont(ofSize: 13)
+        configuration.attributedTitle = titleAttribute
         
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 15)
         
-        btn.configuration = configuration
-        btn.layer.borderColor = UIColor.lightGray.cgColor
-        btn.layer.borderWidth = 1
-        btn.layer.cornerRadius = 10
-        btn.translatesAutoresizingMaskIntoConstraints = false
+        $0.configuration = configuration
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        $0.layer.borderColor = UIColor.lightGray.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.translatesAutoresizingMaskIntoConstraints = false
         
-        return btn
-    }()
+    }
     
-    public lazy var appleButton: UIButton = {
-        let btn = UIButton()
+    public lazy var appleButton = UIButton().then {
         let icon = UIImageView()
-        
         var configuration = UIButton.Configuration.plain()
         
         configuration.title = "Apple로 로그인"
         configuration.baseForegroundColor = UIColor.black
+        configuration.titleAlignment = .center
         icon.image = UIImage(named: "apple-icon")
 
-        btn.addSubview(icon)
+        $0.addSubview(icon)
         
         icon.snp.makeConstraints {
             $0.leading.equalTo(17)
@@ -164,17 +173,19 @@ class LoginView: UIView {
             $0.height.equalTo(14)
             $0.width.equalTo(15)
         }
+        var titleAttribute = AttributedString("Apple로 로그인")
+        titleAttribute.font = UIFont.boldSystemFont(ofSize: 13)
+        configuration.attributedTitle = titleAttribute
         
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 15)
         
-        btn.configuration = configuration
-        btn.layer.borderColor = UIColor.lightGray.cgColor
-        btn.layer.borderWidth = 1
-        btn.layer.cornerRadius = 10
-        btn.translatesAutoresizingMaskIntoConstraints = false
+        $0.configuration = configuration
+        $0.layer.borderColor = UIColor.lightGray.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.translatesAutoresizingMaskIntoConstraints = false
         
-        return btn
-    }()
+    }
     
     // autolayout 설정
     
@@ -204,6 +215,7 @@ class LoginView: UIView {
             $0.top.equalTo(idLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(303)
+            $0.height.equalTo(34)
         }
         
         pwdLabel.snp.makeConstraints {
@@ -215,6 +227,7 @@ class LoginView: UIView {
             $0.top.equalTo(pwdLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(303)
+            $0.height.equalTo(34)
         }
         
         loginButton.snp.makeConstraints {

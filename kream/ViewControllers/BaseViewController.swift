@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class BaseViewController: UITabBarController {
-    private let homeVC = HomeViewController()
+    private let homeVC = UINavigationController(rootViewController: HomeViewController())
     private let styleVC = StyleViewController()
     private let shopVC = ShopViewController()
     private let savedVC = SavedViewController()
@@ -19,14 +19,16 @@ class BaseViewController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        self.tabBar.tintColor = .black
-        self.tabBar.unselectedItemTintColor = .lightGray
+        tabBar.frame.size.height = 90
         
-        homeVC.tabBarItem = UITabBarItem(title: "HOME", image: UIImage(named: "ic_home"),tag: 0)
-        styleVC.tabBarItem = UITabBarItem(title: "STYLE", image: UIImage(named: "ic_style"),tag: 1)
-        shopVC.tabBarItem = UITabBarItem(title: "SHOP", image: UIImage(named: "ic_shop"),tag: 2)
-        savedVC.tabBarItem = UITabBarItem(title: "SAVED", image: UIImage(named: "ic_saved"),tag: 3)
-        mypageVC.tabBarItem = UITabBarItem(title: "MY", image: UIImage(named: "ic_mypage"),tag: 4)
+        self.tabBar.tintColor = .black
+        self.tabBar.unselectedItemTintColor = .gray
+        
+        homeVC.tabBarItem = UITabBarItem(title: "HOME", image: UIImage(named: "ic_home")?.withRenderingMode(.alwaysOriginal),tag: 0)
+        styleVC.tabBarItem = UITabBarItem(title: "STYLE", image: UIImage(named: "ic_style")?.withRenderingMode(.alwaysOriginal),tag: 1)
+        shopVC.tabBarItem = UITabBarItem(title: "SHOP", image: UIImage(named: "ic_shop")?.withRenderingMode(.alwaysOriginal),tag: 2)
+        savedVC.tabBarItem = UITabBarItem(title: "SAVED", image: UIImage(named: "ic_saved")?.withRenderingMode(.alwaysOriginal),tag: 3)
+        mypageVC.tabBarItem = UITabBarItem(title: "MY", image: UIImage(named: "ic_mypage")?.withRenderingMode(.alwaysOriginal),tag: 4)
         
         self.viewControllers = [homeVC, styleVC, shopVC, savedVC, mypageVC]
     }
