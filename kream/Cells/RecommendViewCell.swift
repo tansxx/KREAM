@@ -9,14 +9,14 @@ import UIKit
 import SnapKit
 import Then
 
-class recommendViewCell: UICollectionViewCell {
-    static let identifier = "recommendViewCell"
+class RecommendViewCell: UICollectionViewCell {
+    static let identifier = "RecommendViewCell"
     
-    private lazy var imageView = UIImageView().then {
+    public lazy var imageView = UIImageView().then {
         $0.clipsToBounds = true
     }
     
-    private lazy var titleLabel = UILabel().then {
+    public lazy var titleLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 11, weight: .light)
         $0.textColor = .black
         $0.text = "category"
@@ -41,7 +41,7 @@ class recommendViewCell: UICollectionViewCell {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.top.equalTo(imageView.snp.bottom).offset(6)
             $0.centerX.equalToSuperview()
         }
     }
