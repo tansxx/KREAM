@@ -26,18 +26,43 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // 검색창
-    public lazy var searchField = UITextField().then {
-        $0.backgroundColor = UIColor.systemGray6
-        $0.attributedPlaceholder = NSAttributedString(string: "브랜드, 상품, 프로필 태그 등", attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.5)
-        ])
-        $0.textColor = UIColor.black
-        $0.layer.cornerRadius = 15
-        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 0))
-        $0.leftViewMode = .always
+    private lazy var scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = true
+        $0.showsHorizontalScrollIndicator = false
+    }
+    
+    private lazy var contentView = UIView()
+    
+
+//    // 검색창
+//    public lazy var searchField = UITextField().then {
+//        $0.backgroundColor = UIColor.systemGray6
+//        $0.attributedPlaceholder = NSAttributedString(string: "브랜드, 상품, 프로필 태그 등", attributes: [
+//            NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.5)
+//        ])
+//        $0.textColor = UIColor.black
+//        $0.layer.cornerRadius = 15
+//        $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 0))
+//        $0.leftViewMode = .always
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//    }
+    
+    public lazy var searchButton = UIButton().then {
+        var configuration = UIButton.Configuration.filled()
+    
+        configuration.baseBackgroundColor = UIColor.systemGray6
+        
+        var titleAttribute = AttributedString("브랜드, 상품, 프로필 태그 등")
+        titleAttribute.font = UIFont.systemFont(ofSize: 13.5)
+        titleAttribute.foregroundColor = UIColor.systemGray
+        configuration.attributedTitle = titleAttribute
+        
+        $0.contentHorizontalAlignment = .left
+        $0.configuration = configuration
+        $0.layer.cornerRadius = 12
         $0.translatesAutoresizingMaskIntoConstraints = false
+        
     }
 
     
@@ -113,61 +138,153 @@ class HomeView: UIView {
         $0.register(RecommendViewCell.self, forCellWithReuseIdentifier: RecommendViewCell.identifier)
     }
     
+    private lazy var justdroppedLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16, weight:.bold)
+        $0.textColor = .black
+        $0.textAlignment = .left
+        $0.text = "Just Dropped"
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private lazy var justdroppedSubLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 13)
+        $0.textColor = .lightGray
+        $0.textAlignment = .left
+        $0.text = "발매 상품"
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    // conductCollectionView
+    let conductCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
+        $0.itemSize = CGSize(width: 142, height: 237)
+        $0.minimumInteritemSpacing = 8
+        $0.scrollDirection = .horizontal
+    }).then {
+        $0.isScrollEnabled = true
+        $0.register(JustDroppedViewCell.self, forCellWithReuseIdentifier: JustDroppedViewCell.identifier)
+    }
+    
+    public lazy var challengeTitleLabel = UILabel().then {
+            $0.text = "본격 한파대비! 연말 필수템 모음"
+            $0.textColor = .black
+            $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            $0.textAlignment = .left
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        public lazy var challengeSubtitleLabel = UILabel().then {
+            $0.text = "#해피홀리룩챌린지"
+            $0.textColor = .systemGray2
+            $0.font = UIFont.systemFont(ofSize: 13)
+            $0.textAlignment = .left
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    
+    let challengeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
+        $0.itemSize = CGSize(width: 124, height: 165)
+        $0.minimumInteritemSpacing = 8
+        $0.scrollDirection = .horizontal
+    }).then {
+        $0.isScrollEnabled = true
+        $0.register(instaViewCell.self, forCellWithReuseIdentifier: instaViewCell.identifier)
+    }
+    
     
     private func addComponents() {
-        [
-            searchField,
-            alarmButton,
-            segmentedControl,
-            underlineView,
-            promoimageView,
-            homeCollectionView
-        ].forEach {
-            addSubview($0)
-        }
-        
-        searchField.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(51)
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-55)
-            $0.height.equalTo(40)
-        }
-        
-        alarmButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(59)
-            $0.right.equalToSuperview().offset(-16)
-            $0.height.width.equalTo(24)
-        }
-        
-        segmentedControl.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(107)
-            $0.centerX.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(16)
-            $0.height.equalTo(27)
-        }
-        
-        underlineView.snp.remakeConstraints {
-            $0.left.equalTo(segmentedControl.snp.left)
-            $0.width.equalTo(segmentedControl.frame.width / CGFloat(segmentedControl.numberOfSegments)) // 세그먼트 넓이로 설정
-            $0.height.equalTo(2)
-            $0.top.equalTo(segmentedControl.snp.bottom)
-        }
-        
-        promoimageView.snp.makeConstraints {
-            $0.top.equalTo(underlineView.snp.bottom)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(336)
-        }
+            addSubview(scrollView)
+            scrollView.addSubview(contentView)
+            
+            [
+                searchButton, alarmButton, segmentedControl, underlineView, promoimageView,
+                homeCollectionView, justdroppedLabel, justdroppedSubLabel, conductCollectionView,
+                challengeTitleLabel, challengeSubtitleLabel, challengeCollectionView
+            ].forEach { contentView.addSubview($0) }
+            
+            scrollView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+            
+            contentView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+                $0.width.equalTo(scrollView)
+            }
+            
+            searchButton.snp.makeConstraints {
+                $0.top.equalToSuperview()
+                $0.left.equalToSuperview().offset(16)
+                $0.right.equalToSuperview().offset(-55)
+                $0.height.equalTo(40)
+            }
+            
+            alarmButton.snp.makeConstraints {
+                $0.top.equalToSuperview()
+                $0.right.equalToSuperview().offset(-16)
+                $0.height.width.equalTo(24)
+            }
+            
+            segmentedControl.snp.makeConstraints {
+                $0.top.equalTo(searchButton.snp.bottom).offset(16)
+                $0.left.right.equalToSuperview().inset(16)
+                $0.height.equalTo(27)
+            }
+            
+            underlineView.snp.makeConstraints {
+                $0.top.equalTo(segmentedControl.snp.bottom)
+                $0.left.equalTo(segmentedControl.snp.left)
+                $0.width.equalTo(segmentedControl.frame.width / CGFloat(segmentedControl.numberOfSegments))
+                $0.height.equalTo(2)
+            }
+            
+            promoimageView.snp.makeConstraints {
+                $0.top.equalTo(underlineView.snp.bottom).offset(16)
+                $0.left.right.equalToSuperview()
+                $0.height.equalTo(336)
+            }
 
-        homeCollectionView.snp.makeConstraints {
-            $0.top.equalTo(promoimageView.snp.bottom).offset(20)
-            $0.left.equalToSuperview().offset(16)
-            $0.right.equalToSuperview().offset(-17)
-            $0.height.equalTo(232)
-            $0.bottom.equalToSuperview().offset(-108)
+            homeCollectionView.snp.makeConstraints {
+                $0.top.equalTo(promoimageView.snp.bottom).offset(20)
+                $0.left.equalToSuperview().offset(16)
+                $0.right.equalToSuperview().offset(-17)
+                $0.height.equalTo(232)
+            }
+            
+            justdroppedLabel.snp.makeConstraints {
+                $0.top.equalTo(promoimageView.snp.bottom).offset(252)
+                $0.left.equalToSuperview().offset(16)
+            }
+            
+            justdroppedSubLabel.snp.makeConstraints {
+                $0.top.equalTo(justdroppedLabel.snp.bottom).offset(4)
+                $0.left.equalTo(justdroppedLabel)
+            }
+            
+            conductCollectionView.snp.makeConstraints {
+                $0.top.equalTo(justdroppedSubLabel.snp.bottom).offset(14)
+                $0.left.equalToSuperview().offset(16)
+                $0.width.equalTo(442)
+                $0.height.equalTo(237)
+            }
+            
+            challengeTitleLabel.snp.makeConstraints {
+                $0.top.equalTo(conductCollectionView.snp.bottom).offset(50)
+                $0.left.equalTo(16)
+            }
+            
+            challengeSubtitleLabel.snp.makeConstraints {
+                $0.top.equalTo(challengeTitleLabel.snp.bottom).offset(4)
+                $0.left.equalTo(challengeTitleLabel)
+            }
+            
+            challengeCollectionView.snp.makeConstraints {
+                $0.top.equalTo(challengeSubtitleLabel.snp.bottom).offset(14)
+                $0.left.equalTo(challengeTitleLabel)
+                $0.height.equalTo(165)
+                $0.width.equalTo(388)
+                $0.bottom.equalTo(contentView.snp.bottom).offset(-20) // 스크롤 가능한 범위 설정
+            }
         }
     
-    }
+
     
     @objc private func changeUnderLinePosition() {
         let segmentIndex = CGFloat(segmentedControl.selectedSegmentIndex)
@@ -194,11 +311,9 @@ class HomeView: UIView {
         switch segment.selectedSegmentIndex {
         case 0:
             promoimageView.isHidden = false
-//            recommendView.isHidden = false
             homeCollectionView.isHidden = false
         default:
             promoimageView.isHidden = true
-//            recommendView.isHidden = true
             homeCollectionView.isHidden = true
         }
         

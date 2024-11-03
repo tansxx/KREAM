@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "ic_savebutton.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "instaimage3.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
