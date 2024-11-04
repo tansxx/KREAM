@@ -27,7 +27,7 @@ class HomeView: UIView {
     }
     
     private lazy var scrollView = UIScrollView().then {
-        $0.showsVerticalScrollIndicator = true
+        $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
     }
     
@@ -122,7 +122,7 @@ class HomeView: UIView {
     
     // 광고 이미지
     public lazy var promoimageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.image = UIImage(named: "main_ad")
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -137,6 +137,12 @@ class HomeView: UIView {
         $0.isScrollEnabled = true
         $0.register(RecommendViewCell.self, forCellWithReuseIdentifier: RecommendViewCell.identifier)
     }
+    
+    private lazy var divideLine1 = UIView().then {
+        $0.backgroundColor = .systemGray5
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     
     private lazy var justdroppedLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 16, weight:.bold)
@@ -160,8 +166,14 @@ class HomeView: UIView {
         $0.minimumInteritemSpacing = 8
         $0.scrollDirection = .horizontal
     }).then {
+        $0.showsHorizontalScrollIndicator = false // 수평 스크롤 인디케이터 숨기기
         $0.isScrollEnabled = true
         $0.register(JustDroppedViewCell.self, forCellWithReuseIdentifier: JustDroppedViewCell.identifier)
+    }
+    
+    private lazy var divideLine2 = UIView().then {
+        $0.backgroundColor = .systemGray5
+        $0.translatesAutoresizingMaskIntoConstraints = false
     }
     
     public lazy var challengeTitleLabel = UILabel().then {
@@ -185,6 +197,7 @@ class HomeView: UIView {
         $0.minimumInteritemSpacing = 8
         $0.scrollDirection = .horizontal
     }).then {
+        $0.showsHorizontalScrollIndicator = false // 수평 스크롤 인디케이터 숨기기
         $0.isScrollEnabled = true
         $0.register(instaViewCell.self, forCellWithReuseIdentifier: instaViewCell.identifier)
     }
@@ -196,8 +209,8 @@ class HomeView: UIView {
             
             [
                 searchButton, alarmButton, segmentedControl, underlineView, promoimageView,
-                homeCollectionView, justdroppedLabel, justdroppedSubLabel, conductCollectionView,
-                challengeTitleLabel, challengeSubtitleLabel, challengeCollectionView
+                homeCollectionView, divideLine1, justdroppedLabel, justdroppedSubLabel, conductCollectionView,
+                divideLine2, challengeTitleLabel, challengeSubtitleLabel, challengeCollectionView
             ].forEach { contentView.addSubview($0) }
             
             scrollView.snp.makeConstraints {
@@ -236,7 +249,7 @@ class HomeView: UIView {
             }
             
             promoimageView.snp.makeConstraints {
-                $0.top.equalTo(underlineView.snp.bottom).offset(16)
+                $0.top.equalTo(underlineView.snp.bottom).offset(8)
                 $0.left.right.equalToSuperview()
                 $0.height.equalTo(336)
             }
@@ -245,7 +258,13 @@ class HomeView: UIView {
                 $0.top.equalTo(promoimageView.snp.bottom).offset(20)
                 $0.left.equalToSuperview().offset(16)
                 $0.right.equalToSuperview().offset(-17)
-                $0.height.equalTo(232)
+                $0.height.equalTo(182)
+            }
+        
+            divideLine1.snp.makeConstraints {
+                $0.top.equalTo(homeCollectionView.snp.bottom).offset(30)
+                $0.horizontalEdges.equalToSuperview()
+                $0.height.equalTo(1)
             }
             
             justdroppedLabel.snp.makeConstraints {
@@ -264,6 +283,13 @@ class HomeView: UIView {
                 $0.width.equalTo(442)
                 $0.height.equalTo(237)
             }
+        
+            divideLine2.snp.makeConstraints {
+                $0.top.equalTo(conductCollectionView.snp.bottom).offset(30)
+                $0.horizontalEdges.equalToSuperview()
+                $0.height.equalTo(1)
+            }
+        
             
             challengeTitleLabel.snp.makeConstraints {
                 $0.top.equalTo(conductCollectionView.snp.bottom).offset(50)

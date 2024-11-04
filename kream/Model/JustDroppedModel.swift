@@ -18,6 +18,7 @@ struct JustDroppedModel {
 extension JustDroppedModel {
     static func dummy() -> [JustDroppedModel] {
         return [
+        JustDroppedModel(droppedImage: "main_img", transaction: "거래 33.5만", brandName: "Matin Kim", productName: "마뗑킴 로고 코팅 점퍼 블랙", price: "345,000원"),
         JustDroppedModel(droppedImage: "justimage1", transaction: "거래 12.8만", brandName: "MLB", productName: "청키라이너 뉴욕양키스", price: "139,000원"),
         JustDroppedModel(droppedImage: "justimage2", transaction: "거래 15.6만", brandName: "Jordan", productName: "Jordan 1 Retro High OG\nYellow Ochre", price: "228,000원"),
         JustDroppedModel(droppedImage: "justimage4", transaction: "거래 13.9만", brandName: "Human Made", productName: "Human Made x Kaws\nVarsity Jacket #1 Black", price: "2,000,000원")

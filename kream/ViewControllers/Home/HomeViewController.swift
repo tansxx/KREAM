@@ -11,7 +11,6 @@ import Then
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UISearchBarDelegate {
     private let rootView = HomeView()
-    private let recommendView = RecommendView()
     
     private lazy var homeView = HomeView().then {
         $0.searchButton.isUserInteractionEnabled = true
@@ -29,6 +28,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UISearchBa
         homeView.homeCollectionView.register(RecommendViewCell.self, forCellWithReuseIdentifier: RecommendViewCell.identifier)
         homeView.conductCollectionView.register(JustDroppedViewCell.self, forCellWithReuseIdentifier: JustDroppedViewCell.identifier)
         homeView.challengeCollectionView.register(instaViewCell.self, forCellWithReuseIdentifier: instaViewCell.identifier)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true // 뷰 컨트롤러가 나타날 때 숨기기
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false // 뷰 컨트롤러가 사라질 때 나타내기
     }
 
     @objc
@@ -75,6 +82,8 @@ extension HomeViewController: UICollectionViewDataSource {
         return 0
     }
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == homeView.homeCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendViewCell.identifier, for: indexPath) as? RecommendViewCell else {
@@ -113,7 +122,7 @@ extension HomeViewController: UICollectionViewDataSource {
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == homeView.homeCollectionView {
-            return CGSize(width: 61, height: 61)
+            return CGSize(width: 61, height: 81)
         } else if collectionView == homeView.conductCollectionView {
             return CGSize(width: 142, height: 237)
         } else if collectionView == homeView.challengeCollectionView {
