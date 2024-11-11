@@ -32,7 +32,7 @@ class JustDroppedViewCell: UICollectionViewCell {
         let currentImage = saveButton.image(for: .normal)
         
         if currentImage == UIImage(named: "ic_save") {
-            saveButton.setImage(UIImage(named: "ic_savebutton"), for: .normal)
+            saveButton.setImage(UIImage(named: "ic_save_fill"), for: .normal)
         } else {
             saveButton.setImage(UIImage(named: "ic_save"), for: .normal)
         }

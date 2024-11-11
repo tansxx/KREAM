@@ -12,6 +12,10 @@ import Then
 class HomeViewController: UIViewController, UICollectionViewDelegate, UISearchBarDelegate {
     private let rootView = HomeView()
     
+    private let recommendDataSource = RecommendDataSource()
+    private let justDroppedDataSource = JustDroppedDataSource()
+    private let instaDataSource = InstaDataSource()
+    
     private lazy var homeView = HomeView().then {
         $0.searchButton.isUserInteractionEnabled = true
         $0.searchButton.addTarget(self, action: #selector(searchbtnTap), for: .touchUpInside)
@@ -22,13 +26,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UISearchBa
         self.view = homeView
         
         setupAction()
-        setupDelegate()
+//        setupDelegate()
+        setupCollectionViewDataSource()
         
         // 각 컬렉션 뷰에 셀 등록
-        homeView.homeCollectionView.register(RecommendViewCell.self, forCellWithReuseIdentifier: RecommendViewCell.identifier)
-        homeView.conductCollectionView.register(JustDroppedViewCell.self, forCellWithReuseIdentifier: JustDroppedViewCell.identifier)
-        homeView.challengeCollectionView.register(instaViewCell.self, forCellWithReuseIdentifier: instaViewCell.identifier)
-    }
+            homeView.homeCollectionView.register(RecommendViewCell.self, forCellWithReuseIdentifier: RecommendViewCell.identifier)
+            homeView.conductCollectionView.register(JustDroppedViewCell.self, forCellWithReuseIdentifier: JustDroppedViewCell.identifier)
+            homeView.challengeCollectionView.register(instaViewCell.self, forCellWithReuseIdentifier: instaViewCell.identifier)
+        }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true // 뷰 컨트롤러가 나타날 때 숨기기
@@ -53,16 +58,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UISearchBa
         )
     }
     
-    private func setupDelegate() {
-        homeView.homeCollectionView.dataSource = self
-        homeView.homeCollectionView.delegate = self
-        
-        homeView.conductCollectionView.dataSource = self
-        homeView.conductCollectionView.delegate = self
-        
-        homeView.challengeCollectionView.dataSource = self
-        homeView.challengeCollectionView.delegate = self
-    }
+    private func setupCollectionViewDataSource() {
+            homeView.homeCollectionView.dataSource = recommendDataSource
+            homeView.homeCollectionView.delegate = self
+
+            homeView.conductCollectionView.dataSource = justDroppedDataSource
+            homeView.conductCollectionView.delegate = self
+
+            homeView.challengeCollectionView.dataSource = instaDataSource
+            homeView.challengeCollectionView.delegate = self
+        }
     
     @objc
     private func segmentedControlValueChanged(segment: UISegmentedControl) {
@@ -70,64 +75,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UISearchBa
     }
 }
 
-extension HomeViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == homeView.homeCollectionView {
-            return RecommendModel.dummy().count
-        } else if collectionView == homeView.conductCollectionView {
-            return JustDroppedModel.dummy().count
-        } else if collectionView == homeView.challengeCollectionView {
-            return InstaModel.dummy().count
-        }
-        return 0
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == homeView.homeCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendViewCell.identifier, for: indexPath) as? RecommendViewCell else {
-                return UICollectionViewCell()
-            }
-            let list = RecommendModel.dummy()
-            cell.imageView.image = list[indexPath.row].image
-            cell.titleLabel.text = list[indexPath.row].name
-            return cell
-            
-        } else if collectionView == homeView.conductCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JustDroppedViewCell.identifier, for: indexPath) as? JustDroppedViewCell else {
-                return UICollectionViewCell()
-            }
-            let list = JustDroppedModel.dummy()
-            cell.imageView.image = UIImage(named: list[indexPath.row].droppedImage)
-            cell.transactionLabel.text = list[indexPath.row].transaction
-            cell.brandNameLabel.text = list[indexPath.row].brandName
-            cell.productNameLabel.text = list[indexPath.row].productName
-            cell.productPriceLabel.text = list[indexPath.row].price
-            return cell
-            
-        } else if collectionView == homeView.challengeCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: instaViewCell.identifier, for: indexPath) as? instaViewCell else {
-                return UICollectionViewCell()
-            }
-            let list = InstaModel.dummy()
-            cell.imageView.image = UIImage(named: list[indexPath.row].instaImage)
-            cell.idLabel.text = list[indexPath.row].instaId
-            return cell
-        }
-        return UICollectionViewCell()
-    }
-}
-
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == homeView.homeCollectionView {
-            return CGSize(width: 61, height: 81)
-        } else if collectionView == homeView.conductCollectionView {
-            return CGSize(width: 142, height: 237)
-        } else if collectionView == homeView.challengeCollectionView {
-            return CGSize(width: 124, height: 165)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == homeView.conductCollectionView && indexPath.item == 0 {
+            let detailVC = DetailViewController()
+            navigationController?.pushViewController(detailVC, animated: true)
         }
-        return CGSize(width: 50, height: 50)
     }
 }
