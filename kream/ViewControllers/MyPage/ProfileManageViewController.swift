@@ -33,8 +33,8 @@ class ProfileManageViewController: UIViewController {
         profileManageView.pwdField.isUserInteractionEnabled = false
         
         // 버튼 액션 추가
-        profileManageView.emailChangeButton.addTarget(self, action: #selector(handleEmailChange), for: .touchUpInside)
-        profileManageView.pwdChangeButton.addTarget(self, action: #selector(handlePwdChange), for: .touchUpInside)
+        profileManageView.emailChangeButton.addTarget(self, action: #selector(emailChange), for: .touchUpInside)
+        profileManageView.pwdChangeButton.addTarget(self, action: #selector(pwdChange), for: .touchUpInside)
     }
     
     private func loadProfileData() {
@@ -49,7 +49,7 @@ class ProfileManageViewController: UIViewController {
     }
 
     // 이메일 변경 버튼 액션
-    @objc private func handleEmailChange() {
+    @objc private func emailChange() {
         toggleField(profileManageView.emailField, changeButton: profileManageView.emailChangeButton, placeholder: "새로운 이메일을 입력해 주세요!")
         if !profileManageView.emailField.isUserInteractionEnabled, let updatedEmail = profileManageView.emailField.text {
             dataManager.setEmail(updatedEmail)
@@ -57,12 +57,15 @@ class ProfileManageViewController: UIViewController {
     }
 
     // 비밀번호 변경 버튼 액션
-    @objc private func handlePwdChange() {
+    @objc private func pwdChange() {
         toggleField(profileManageView.pwdField, changeButton: profileManageView.pwdChangeButton, placeholder: "새로운 비밀번호를 입력해 주세요!")
         if !profileManageView.pwdField.isUserInteractionEnabled, let updatedPwd = profileManageView.pwdField.text {
             dataManager.setPassword(updatedPwd)
         }
     }
+  
+    
+
     
     // 필드와 버튼 상태 전환
     private func toggleField(_ textField: UITextField, changeButton: UIButton, placeholder: String) {

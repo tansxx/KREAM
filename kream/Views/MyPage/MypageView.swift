@@ -94,18 +94,15 @@ class MypageView: UIView {
         return button
     }()
     
-    public lazy var profileImage: UIImageView = {
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(named: "profile_image")
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
-    }()
+    public lazy var profileImage = UIImageView().then {
+        $0.image = UIImage(named: "profile_image")
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 45
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
     
     public lazy var nameLabel = UILabel().then {
-        $0.text = "Jeong_iOS"
         $0.textColor = .black
         $0.textAlignment = .center
         $0.font = UIFont.boldSystemFont(ofSize: 16)

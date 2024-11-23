@@ -1,7 +1,8 @@
+
 //
 //  LoginView.swift
 //  UMS_kream
-//btn 
+//btn
 //  Created by 강희정 on 9/25/24.
 //
 
@@ -10,13 +11,13 @@ import SnapKit
 import Then
 
 class LoginView: UIView {
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         self.addComponents()
     }
-
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -24,13 +25,13 @@ class LoginView: UIView {
     
     // 상단 로고 이미지
     public lazy var mainLogoImage: UIImageView = {
-            let imageView = UIImageView()
-            
-            imageView.image = UIImage(named: "kream-logo")
-            imageView.contentMode = .scaleAspectFill
-            
-            return imageView
-        }()
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage(named: "kream-logo")
+        imageView.contentMode = .scaleAspectFill
+        
+        return imageView
+    }()
     
     public lazy var idLabel: UILabel = {
         let label = UILabel()
@@ -120,7 +121,7 @@ class LoginView: UIView {
         $0.configuration = configuration
         $0.layer.cornerRadius = 8
         $0.translatesAutoresizingMaskIntoConstraints = false
-
+        
     }
     
     public lazy var kakaoButton = UIButton().then {
@@ -164,7 +165,7 @@ class LoginView: UIView {
         configuration.baseForegroundColor = UIColor.black
         configuration.titleAlignment = .center
         icon.image = UIImage(named: "apple-icon")
-
+        
         $0.addSubview(icon)
         
         icon.snp.makeConstraints {
@@ -250,7 +251,6 @@ class LoginView: UIView {
             $0.height.equalTo(40)
             $0.width.equalTo(298)
         }
-       
+        
     }
-
 }
