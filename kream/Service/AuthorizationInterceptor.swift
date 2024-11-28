@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class AuthorizationInterceptor: RequestInterceptor {
+final class AuthorizationInterceptor: RequestInterceptor {
     private let kakaoKey: String
     
     init(kakaoKey: String) {

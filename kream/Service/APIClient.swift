@@ -14,7 +14,12 @@ final class APIClient {
     private let session: Session
     
     private init() {
-        let interceptor = AuthorizationInterceptor(kakaoKey: "REMOVED") // 본인의 API key를 넣어주세요!
+        // Info.plist에서 API_KEY 가져오기
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String else {
+            fatalError("API_KEY가 Info.plist에 설정되지 않았습니다.") // 오류 발생 시 앱 종료
+        }
+        
+        let interceptor = AuthorizationInterceptor(kakaoKey: apiKey) // 가져온 API 키 전달
         session = Session(interceptor: interceptor)
     }
     

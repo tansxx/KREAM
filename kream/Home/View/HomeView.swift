@@ -230,7 +230,7 @@ class HomeView: UIView {
             }
             
             alarmButton.snp.makeConstraints {
-                $0.top.equalToSuperview()
+                $0.centerY.equalTo(searchButton)
                 $0.right.equalToSuperview().offset(-16)
                 $0.height.width.equalTo(24)
             }
