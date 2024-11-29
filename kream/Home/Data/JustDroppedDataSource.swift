@@ -18,7 +18,11 @@ class JustDroppedDataSource: NSObject, UICollectionViewDataSource, UICollectionV
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JustDroppedViewCell.identifier, for: indexPath) as? JustDroppedViewCell else {
             return UICollectionViewCell()
         }
-        cell.imageView.image = UIImage(named: items[indexPath.row].droppedImage)
+        if let droppedImage = items[indexPath.row].droppedImage {
+            cell.imageView.image = UIImage(named: droppedImage)
+        } else if let urlImage = items[indexPath.row].urlImage {
+            ImageLoader.loadImage(into: cell.imageView, from: urlImage, placeholder: UIImage(named: "default_image"))
+        }
         cell.transactionLabel.text = items[indexPath.row].transaction
         cell.brandNameLabel.text = items[indexPath.row].brandName
         cell.productNameLabel.text = items[indexPath.row].productName

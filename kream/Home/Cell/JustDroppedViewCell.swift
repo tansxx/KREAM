@@ -57,6 +57,8 @@ class JustDroppedViewCell: UICollectionViewCell {
         $0.textAlignment = .left
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: 12)
+        $0.numberOfLines = 2
+        $0.lineBreakMode = .byTruncatingTail // 텍스트가 넘치면 '...' 표시
         $0.translatesAutoresizingMaskIntoConstraints = false
         
     }
@@ -121,6 +123,7 @@ class JustDroppedViewCell: UICollectionViewCell {
         productNameLabel.snp.makeConstraints {
             $0.top.equalTo(brandNameLabel.snp.bottom).offset(3)
             $0.left.equalTo(imageView.snp.left).offset(4)
+            $0.right.equalToSuperview().offset(-4)
         }
         
         productPriceLabel.snp.makeConstraints {
@@ -134,5 +137,10 @@ class JustDroppedViewCell: UICollectionViewCell {
         }
     }
     
+    // 줄바꿈을 적용할 최대 너비를 인식
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        productNameLabel.preferredMaxLayoutWidth = productNameLabel.frame.width
+    }
     
 }

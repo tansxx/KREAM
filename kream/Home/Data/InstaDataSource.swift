@@ -18,7 +18,11 @@ class InstaDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDel
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: instaViewCell.identifier, for: indexPath) as? instaViewCell else {
             return UICollectionViewCell()
         }
-        cell.imageView.image = UIImage(named: items[indexPath.row].instaImage)
+        if let instaImage = items[indexPath.row].instaImage {
+            cell.imageView.image = UIImage(named: instaImage)
+        } else if let urlImage = items[indexPath.row].urlImage {
+            ImageLoader.loadImage(into: cell.imageView, from: urlImage, placeholder: UIImage(named:"default_image"))
+        }
         cell.idLabel.text = items[indexPath.row].instaId
         return cell
     }
